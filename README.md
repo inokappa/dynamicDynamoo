@@ -14,12 +14,14 @@
 
 ### 図
 
+![構成図](https://raw.githubusercontent.com/wiki/inokappa/dynamicDynamoo/images/2017082002.png)
+
 ### 役割
 
-| ** Lambda Function ** | ** 役割 ** | ** 備考 ** |
+| Lambda Function | 役割 | 詳細 | 備考 |
 |:---|:---|:---|
-| ec2Counter | タグで指定した EC2 インスタンスの数をカウントして DynamoDB に記録する | DynamoDB Table Ec2Counter を利用する |
-| capacityScaler | Provisioned capacity を変更する | EC2 の増減に一応対応している |
+| ec2Counter | カウント用 Lambda Function | タグで指定した EC2 インスタンスの数をカウントして DynamoDB に記録する | DynamoDB Table Ec2Counter を利用する |
+| capacityScaler | Capacity 調整用 Lambda Function | Provisioned capacity を変更する | EC2 の増減に一応対応している |
 
 これらの Lambda Function を StepFunctions でつなぐ。
 
@@ -120,6 +122,7 @@ sls deploy
 ## 課題
 
 * EC2 台数が減って Capacity を減らす場合のロジックを詰める必要がある
+* 複数のテーブルを扱うことが出来るが、テーブルで Capacity が異なる場合には個々に StepFunctions ステートマシンを用意する必要がある...
 * 処理に失敗した際等の Slack 通知を有効化（今はコメントアウト）したい
 * StepFunctions のステートマシンを実行するトリガについて要検討（CloudWatch Events を検討中）
 * StepFunctions のデプロイも Serverless Framework でやりたい
