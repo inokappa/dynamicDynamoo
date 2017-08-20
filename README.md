@@ -19,7 +19,7 @@
 ### 役割
 
 | Lambda Function | 役割 | 詳細 | 備考 |
-|:---|:---|:---|
+|:---|:---|:---|:---|
 | ec2Counter | カウント用 Lambda Function | タグで指定した EC2 インスタンスの数をカウントして DynamoDB に記録する | DynamoDB Table Ec2Counter を利用する |
 | capacityScaler | Capacity 調整用 Lambda Function | Provisioned capacity を変更する | EC2 の増減に一応対応している |
 
