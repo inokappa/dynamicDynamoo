@@ -276,9 +276,6 @@ def run(event, context):
         # EC2 の台数から想定する DynamoDB キャパシティを算出する
         read_capacity, write_capacity = calculate_dynamodb_capacity(current_ec2_num)
 
-        # for debug
-        dynamodb_tables = "aaa,bbb".split(',')
-
         output['ec2_num_status'] = comparison_result # unchanged(変化無し) increased(増加) decreased(減少)
         output['ec2_num_count'] = current_ec2_num
         tables = []
