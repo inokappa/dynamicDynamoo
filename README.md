@@ -7,7 +7,7 @@
 * EC2 の台数をベースにして DynamoDB の Provisioned capacity を自動的に上げ下げする試み
 * 既に [DynamoDB は Provisioned capacity の Auto Scaling をサポートしている](https://aws.amazon.com/jp/blogs/news/new-auto-scaling-for-amazon-dynamodb/)が、それとは違ったパラメータで Auto Scaling させてみたい
 * なんちゃって Auto Scaling を目指す
-* Lambda と DynamoDB そして StepFunctions を利用する
+* Lambda と DynamoDB そして Step Functions を利用する
 * dynamicDynamoo はディスカウントストア「[ダイクマ](https://www.youtube.com/watch?v=zGPbX4I27Cs)」へのオマージュです
 
 ## 構成
@@ -23,9 +23,9 @@
 | ec2Counter | カウント用 Lambda Function | タグで指定した EC2 インスタンスの数をカウントして DynamoDB に記録する | DynamoDB Table Ec2Counter を利用する |
 | capacityScaler | Capacity 調整用 Lambda Function | Provisioned capacity を変更する | EC2 の増減に一応対応している |
 
-これらの Lambda Function を StepFunctions でつなぐ。
+これらの Lambda Function を Step Functions でつなぐ。
 
-### StepFunctions ビジュアルワークフロー
+### Step Functions ビジュアルワークフロー
 
 ![ビジュアルワークフロー](https://raw.githubusercontent.com/wiki/inokappa/dynamicDynamoo/images/2017082001.png)
 
@@ -72,7 +72,7 @@ cd capacityScaler
 sls deploy
 ```
 
-### StepFunctions ASL
+### Step Functions ASL
 
 ```json
 {
@@ -122,10 +122,10 @@ sls deploy
 ## 課題
 
 * EC2 台数が減って Capacity を減らす場合のロジックを詰める必要がある
-* 複数のテーブルを扱うことが出来るが、テーブルで Capacity が異なる場合には個々に StepFunctions ステートマシンを用意する必要がある...
+* 複数のテーブルを扱うことが出来るが、テーブルで Capacity が異なる場合には個々に Step Functions ステートマシンを用意する必要がある...
 * 処理に失敗した際等の Slack 通知を有効化（今はコメントアウト）したい
-* StepFunctions のステートマシンを実行するトリガについて要検討（CloudWatch Events を検討中）
-* StepFunctions のデプロイも Serverless Framework でやりたい
+* Step Functions のステートマシンを実行するトリガについて要検討（CloudWatch Events を検討中）
+* Step Functions のデプロイも Serverless Framework でやりたい
 
 ## その他
 
