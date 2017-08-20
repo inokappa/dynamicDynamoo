@@ -32,3 +32,19 @@ functions:
       DYNAMODB_TABLES: "aaa,bbb"
 plugins:
   - serverless-python-requirements
+resources:
+  Resources:
+    TodosDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: Service
+            AttributeType: S
+        KeySchema:
+          - AttributeName: Service
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: "Ec2Counter"
